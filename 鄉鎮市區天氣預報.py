@@ -7,7 +7,26 @@ import pymysql
 import datetime
 
 
+#處理鄉鎮市區代碼的檔案
+#以pandas讀入鄉鎮市區代碼的excel檔
+df = pd.read_excel('鄉鎮市區代碼.xlsx')
+#print出前五列
+# print(df.head())
 
+#取得標題
+header = df.iloc[2]
+df1 = df[3:].copy()
+df1 = df1.rename(columns = header)
+# print(df1.head())
+
+#去掉不需要的欄位
+df2 = df1.drop(columns={'縣市代碼','村里代碼','村里代碼','村里名稱','村里名稱'}, axis = 1)
+# print(df2.head())
+
+#去除重複的區里代碼
+df3 = df2.drop_duplicates()
+#存成csv檔
+df3.to_csv('district.csv', encoding='big5', index=False)
 
 
 
